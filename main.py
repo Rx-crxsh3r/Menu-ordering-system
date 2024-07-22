@@ -6,7 +6,7 @@ fees = 0
 A_Fees = 0
 A_Total = 0
 
-class UserInterface:    
+class UserInterface:
     menu = r'''
 APPETIZERS
 burgers,
@@ -41,10 +41,10 @@ dressing'''
 
 def A_appetizer(x, y):
     if x > 0:
-        extra = input("Would you like a drink or an add-on with that? ")
-        if extra.lower() in ("yes", "y"):
-            addons = input("What would you like as an addon? ")
-            addonslst = addons.strip().split(", ")
+        extra = ui.console.input("[#D3869B]Would you like a drink or an add-on with that?[/] ").strip().lower()
+        if extra in ("yes", "y"):
+            addons = ui.console.input("[#D3869B]What would you like as an addon?[/] ").strip()
+            addonslst = addons.split(", ")
             for addon in addonslst:
                 if addon.lower() == "cake":
                     y += 12
@@ -57,17 +57,17 @@ def A_appetizer(x, y):
                 elif addon.lower() in ("nothing", "no"):
                     pass
                 else:
-                    print("One or more of the add-on(s) you entered is not available in today's menu, please view the menu and try again.")
+                    ui.console.print("One or more of the add-on(s) you entered is not available in today's menu, please view the menu and try again.", style="#D3869B")
                     ui.Todays_menu()
                     return A_appetizer(x, y)
             return y
     else:
-        print("You can't order an add-on to an APPETIZER without an appetizer")
+        ui.console.print("You can't order an add-on to an APPETIZER without an appetizer", style="#D3869B")
     return y
 
 def appetizer(x):
-    order = input("Enter order: ")
-    orderlst = order.strip().split(", ")
+    order = ui.console.input("[#D3869B]Enter order:[/] ").strip()
+    orderlst = order.split(", ")
     for item in orderlst:
         if item.lower() in ("burgers", "burger"):
             x += 13
@@ -80,7 +80,7 @@ def appetizer(x):
         elif item.lower() == "nothing":
             pass
         else:
-            print("One or more of the items you entered is not available in today's menu, please view the menu and try again.")
+            ui.console.print("One or more of the items you entered is not available in today's menu, please view the menu and try again.", style="#D3869B")
             ui.Todays_menu()
             return appetizer(x)
     return x
@@ -96,4 +96,4 @@ if fees > 0 and A_Fees >= 0:
     ui.print_receipt_A(fees, A_Fees, A_Total)
     ui.waiting_time()
 else:
-    print("Invalid order or no order placed.")
+    ui.console.print("Invalid order or no order placed.", style="#D3869B")
